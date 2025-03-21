@@ -1,17 +1,23 @@
 import React from 'react'
-import { createUserWithEmailAndPassword ,sendEmailVerification,signInWithEmailAndPassword} from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { useFormik } from 'formik';
 import { useState } from 'react';
-import { useNavigate, useNavigation } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import { toast } from 'react-toastify';
 import {auth} from "../../firebase";
 import ForgotPassword from './forgot-password';
-
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
 
 const Form = () => {
   const [isSignUp,setIsSignUp] =useState(false);
- const navigate = useNavigate();
+  const [showPass, setShowPass] =useState(false);
+  const navigate = useNavigate();
 
   const formik = useFormik({
   initialValues:{
@@ -19,15 +25,19 @@ const Form = () => {
     password:"",
   },
 
-  onSubmit: ({email,password}) =>{
+  onSubmit: ({email,password}, {resetForm}) =>{
    if (isSignUp){
     //yeni hesap oluştur
     createUserWithEmailAndPassword(auth ,email ,password)
     .then((res)=>{
       //doğrulama epostası gönder
       sendEmailVerification(res.user);
-      toast.info("Mailinize doğrulama epostası gönderildi lütfen kontrol edin");
-      navigate("/feed");
+      toast.info("Mailinize doğrulama epostası gönderildi lütfen mailinizi doğrulayın ve giriş yapın "
+
+      );
+      setIsSignUp(false)
+      resetForm();
+      
     })
     .catch((err) =>toast.error("Hata!" + err.code));
    }else{
@@ -35,8 +45,10 @@ const Form = () => {
     signInWithEmailAndPassword(auth ,email ,password)
     .then(()=>{
       toast.success("Hesaba giriş yapıldı");
+      
       navigate("/feed");
     })
+
      .catch((err) =>toast.error("Hata!" +err.code));
    }
   },
@@ -46,21 +58,28 @@ const Form = () => {
    <>
      <form className='flex flex-col' onSubmit={formik.handleSubmit}>
       <label>Email</label>
-      <input type="email" name="email" className='input'onChange={formik.handleChange} />
+      <input type="email" name="email" className='input'onChange={formik.handleChange} value={formik.values.email} autoFocus />
 
 
       <label className='mt-5'>Şifre</label>
-      <input type="text" name="password" className='input'onChange={formik.handleChange} />
-      <ForgotPassword/>
-      <button className='mt-10  bg-white text-black rounded-full font-bold transition hover:bg-gray-300'>{isSignUp ? "Kaydol" : "Giriş Yap"}</button>
+
+        <div className='relative'>
+         <input type={showPass ? "text" : "password"} name="password" className='input w-full' onChange={formik.handleChange} value={formik.values.password}/>
+          <button type='button' className='absolute end-3 text-[#373636] text-2xl top-[40%] translate-y-[-50%] cursor-pointer'  onClick={()=>setShowPass(!showPass)}>
+          {showPass ? <FaEyeSlash/> : <FaEye/>}
+          </button>
+        </div>
+         {!isSignUp ? <ForgotPassword/> : <div className='h-[28px] w-1'></div>}
+
+       <button type= "submit" className='mt-10  bg-white text-black rounded-full font-bold transition hover:bg-gray-300'>{isSignUp ? "Kaydol" : "Giriş Yap"}</button>
 
       <p>
-        <span className='text-gray-500'>{isSignUp ? "Hesabınız varsa" : "Hesabınız yoksa"}</span>
+        <span className='text-gray-500 mt-5'>{isSignUp ? "Hesabınız varsa" : "Hesabınız yoksa"}</span>
         <span className='cursor-pointer ms-2 text-blue-500 hover:underline' onClick={() =>setIsSignUp(!isSignUp)}>{isSignUp ? "Giriş yap" :"Kaydolun"}</span>
       </p>
      </form>
    </>
-  )
+  );
 };
 
 export default Form;
