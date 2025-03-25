@@ -64,7 +64,7 @@ const Form = () => {
       <label className='mt-5'>Şifre</label>
 
         <div className='relative'>
-         <input type={showPass ? "text" : "password"} name="password" className='input w-full' onChange={formik.handleChange} value={formik.values.password}/>
+         <input type={showPass ? "text" : "password"} name="password" className='input w-full text-black' onChange={formik.handleChange} value={formik.values.password}/>
           <button type='button' className='absolute end-3 text-[#373636] text-2xl top-[40%] translate-y-[-50%] cursor-pointer'  onClick={()=>setShowPass(!showPass)}>
           {showPass ? <FaEyeSlash/> : <FaEye/>}
           </button>

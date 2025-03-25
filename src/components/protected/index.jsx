@@ -24,7 +24,8 @@ const Protected = () => {
   //eğer kullanıcının oturumu kapalıysa veya epostası doğrulanmamışsa logine yönlendir
   if(user===null  || !user?.emailVerified===false ){
     //epostası doğrulanmışsa bildirim gönder
-    if(user?.emailVerified===false)  toast.info("Lütfen mail adresinizi doğrulayınız");
+    if(user?.emailVerified===false) 
+       toast.info("Lütfen mail adresinizi doğrulayınız");
     return <Navigate to= "/" replace/>;
   }
   //eğer kullanıcınn oturumu  açık ama epostası doğrulanmamışsa bildirim gönder

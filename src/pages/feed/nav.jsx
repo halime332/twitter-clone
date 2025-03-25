@@ -15,7 +15,7 @@ const Nav = ({user}) => {
 
       
         {navSections.map((item,key) => 
-       ( <div key={key} className='flex items-center gap-3 text-2xl md:text-xl p-3 cursor-pointer rounded-lg transition hover:bg-[#505050b7]
+       ( <div key={key} className='flex items-center gap-3 text-2xl md:text-xl p-3 cursor-pointer rounded-lg transition hover:bg-fourth
           max-md:justify-center'>
           {item.icon}
           <span className='whitespace-nowrap max-md:hidden'>{item.title}</span>
@@ -33,7 +33,7 @@ const Nav = ({user}) => {
       </div>
 
 
-      <button className='bg-zinc-700 flex items-center justify-center gap-2 text-2xl md:text-base p-1  rounded transition hover:bg-zinc-900 max-md:p-2' onClick={() =>signOut(auth)}>
+      <button className='bg-fourth flex items-center justify-center gap-2 text-2xl md:text-base p-1  rounded transition hover:bg-zinc-900 max-md:p-2' onClick={() =>signOut(auth)}>
       <BiSolidDoorOpen />
        <span className='max-md:hidden'>Çıkış Yap</span>
        </button>

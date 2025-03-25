@@ -18,7 +18,7 @@ const Feed = () => {
   
 
    return (
-    <div className="h-screen bg-secondary overflow-hidden text-primary grid 
+    <div className="h-screen bg-primary overflow-hidden text-secondary grid 
     grid-cols-[1fr_minmax(300px,600px)_1fr]">
      <Nav user={user}/>
      <Main user={user}/>
