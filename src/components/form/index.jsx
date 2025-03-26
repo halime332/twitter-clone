@@ -7,9 +7,10 @@ import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from '../../firebase/index';
 import uploadToStorage from '../../firebase/uploadToStorage';
 import { toast } from 'react-toastify';
-
+import Loader from "../loader";
 
 const Form = ({user}) => {
+  const [isLoading ,setIsLoading] =useState(false);
   const [image,setImage] =useState(null);
   const fileInputRef = useRef(null);
 
@@ -39,10 +40,14 @@ const Form = ({user}) => {
      //yazı ve resim içeriğini yoksa hata gönder
      if(!text && !file)
       return toast.warning("Lütfen gönderi içeriğini belirleyiniz ");
+
+     try{
+       //yüklenme başladığında isLoadinge güncelle
+     setIsLoading(true)
     
      //resmi firebase storage'a yükle
      const imageUrl =await uploadToStorage(file);
-     return;
+     
 
      //koleksiyonun referansını al
      const tweetsCol =collection(db,"tweets");
@@ -67,6 +72,12 @@ const Form = ({user}) => {
      //inputları temizle
      e.target.rest();
      setImage(null);
+    }catch(error){
+      console.log(error);
+    }
+    //yükleme bittiğinde isLoadingi güncelle
+    setIsLoading(false);
+
    };
 
 
@@ -104,14 +115,18 @@ const Form = ({user}) => {
                 <button type='button' className='form-icon'>
                  <MdOutlineGifBox />
                 </button>
-                <button type='submit' className='form-icon'>
+                <button type='button' className='form-icon'>
                  <FaRegSmile className='text-lg'/>
                 </button>
                             
               </div>
 
-              <button className='bg-secondary font-bold px-5 py-[6px]
-              rounded-full text-primary tracking-wide hover:brightness-90'>Gönder</button>
+              <button disabled={isLoading} type='submit' className='bg-secondary font-bold px-5 py-[6px]
+              rounded-full text-primary tracking-wide hover:brightness-90 min-w -[100px]'>
+                
+                {isLoading ? <Loader/> : "Gönder"}
+              
+              </button>
             </div>
           </form>
     </div>
