@@ -20,7 +20,7 @@ const ForgotPassword = () => {
       toast.info("Mailinize şifre sıfırlama bağlantısı gönderildi.Lütfen kontrol ediniz"
 
       );
-      setIsOpen(false)
+      setIsOpen(false);
     })
     .catch(()=>{toast.error("Mail gönderilemedi");
 
@@ -30,7 +30,10 @@ const ForgotPassword = () => {
 
   return (
     <>
-    <span className='flex justify-end text-sm text-gray-500 hover:text-gray-400 mt-2 text-end cursor-pointer' onClick={() =>setIsOpen(true)}>Şifreni mi unuttun ?</span>
+    <span className='flex justify-end text-sm text-gray-500 hover:text-gray-400 mt-2 text-end cursor-pointer'
+     onClick={() =>setIsOpen(true)}>
+      Şifreni mi unuttun ?
+    </span>
 
     {<Modal isOpen={isOpen} close={()=>setIsOpen(false)}>
 

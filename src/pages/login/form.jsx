@@ -56,26 +56,44 @@ const Form = () => {
 
   return (
    <>
-     <form className='flex flex-col' onSubmit={formik.handleSubmit}>
+     <form className='flex flex-col' 
+     onSubmit={formik.handleSubmit}>
       <label>Email</label>
-      <input type="email" name="email" className='input'onChange={formik.handleChange} value={formik.values.email} autoFocus />
+      <input type="email" name="email" className='input'
+      onChange={formik.handleChange} 
+      value={formik.values.email}
+       autoFocus />
 
 
       <label className='mt-5'>Şifre</label>
 
         <div className='relative'>
-         <input type={showPass ? "text" : "password"} name="password" className='input w-full text-black' onChange={formik.handleChange} value={formik.values.password}/>
-          <button type='button' className='absolute end-3 text-[#373636] text-2xl top-[40%] translate-y-[-50%] cursor-pointer'  onClick={()=>setShowPass(!showPass)}>
+         <input type={showPass ? "text" : "password"} name="password" className='input w-full text-black'
+          onChange={formik.handleChange} 
+          value={formik.values.password}
+        />
+          <span type='button' className='absolute end-3 text-[#373636] text-2xl top-[40%] translate-y-[-50%] cursor-pointer'  
+          onClick={()=>setShowPass(!showPass)}
+          >
           {showPass ? <FaEyeSlash/> : <FaEye/>}
-          </button>
+          </span>
         </div>
          {!isSignUp ? <ForgotPassword/> : <div className='h-[28px] w-1'></div>}
 
-       <button type= "submit" className='mt-10  bg-white text-black rounded-full font-bold transition hover:bg-gray-300'>{isSignUp ? "Kaydol" : "Giriş Yap"}</button>
+        <button type= "submit" className='mt-10  bg-white text-black rounded-full font-bold transition hover:bg-gray-300'>
+          {isSignUp ? "Kaydol" : "Giriş Yap"}
+        </button>
 
-      <p>
-        <span className='text-gray-500 mt-5'>{isSignUp ? "Hesabınız varsa" : "Hesabınız yoksa"}</span>
-        <span className='cursor-pointer ms-2 text-blue-500 hover:underline' onClick={() =>setIsSignUp(!isSignUp)}>{isSignUp ? "Giriş yap" :"Kaydolun"}</span>
+      <p className='mt-5'>
+        <span className='text-gray-500 mt-5'>
+          {isSignUp ? "Hesabınız varsa" : "Hesabınız yoksa"}
+        </span>
+
+        <span className='cursor-pointer ms-2 text-blue-500 hover:underline'
+         onClick={() =>setIsSignUp(!isSignUp)}
+         >
+          {isSignUp ? "Giriş yap" :"Kaydolun"}
+        </span>
       </p>
      </form>
    </>

@@ -31,7 +31,7 @@ const Form = ({user}) => {
    //çarpıya basıldığında ekrandaki resmi kaldır ve inputu temzile
    const handlesubmit= async(e) =>{
       e.preventDefault();
-
+      
 
       //inputlardaki verilere eriş
      const text = e.target.text.value.trim();
@@ -78,10 +78,10 @@ const Form = ({user}) => {
     //yükleme bittiğinde isLoadingi güncelle
     setIsLoading(false);
 
-   };
+  };
 
 
-
+    
 
   return (
     <div className='border-b border-fourth p-4  flex gap-3'>
@@ -133,4 +133,4 @@ const Form = ({user}) => {
   )
 };
 
-export default Form;
+export default React.memo(Form);

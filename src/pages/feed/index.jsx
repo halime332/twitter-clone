@@ -1,10 +1,9 @@
 import React from "react";
-import { auth } from "../../firebase";
 import Aside from "./aside";
 import Main from "./main";
 import Nav from "./nav";
 import { useOutletContext } from "react-router-dom";
-import { toast } from "react-toastify";
+
 
 
 
@@ -13,8 +12,6 @@ const Feed = () => {
   const user =useOutletContext();
  
    
-  const handleClick=() =>
-    signOut(auth).then(() =>toast.info("Hesaptan çıkış yapıldı"));
   
 
    return (
