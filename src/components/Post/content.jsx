@@ -1,8 +1,12 @@
 import React from 'react'
 
-const Content = () => {
+const Content = ({data}) => {
+  
   return (
-    <div>Content</div>
+    <div className='my-1'>
+      {data.text && <p>{data.text}</p>}
+      {data.image && <img src={data.image} className='rounded-xl my-2'/>}
+    </div>
   )
 };
 

@@ -22,7 +22,7 @@ const Protected = () => {
     return <PageLoader/>;
   }
   //eğer kullanıcının oturumu kapalıysa veya epostası doğrulanmamışsa logine yönlendir
-  if(user===null  || !user?.emailVerified===false ){
+  if(user===null  || user?.emailVerified===false ){
     //epostası doğrulanmışsa bildirim gönder
     if(user?.emailVerified===false) 
        toast.info("Lütfen mail adresinizi doğrulayınız");

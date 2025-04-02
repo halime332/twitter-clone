@@ -14,4 +14,4 @@ const Loader = ({designs}) => {
   )
 }
 
-export default Loader
+export default Loader;

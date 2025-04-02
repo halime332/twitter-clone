@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Form from '../../components/form';
-import Post from '../../components/Post';
+import Post from '../../components/post';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { db } from '../../firebase';
 import Loader from '../../components/loader';
 
 const Main = ({user}) => {
-  const [tweets ,setTweets] =useState();
+  const [tweets ,setTweets] =useState(null);
 
   useEffect(() =>{
     const tweetsCol = collection(db,"tweets");
@@ -30,7 +30,9 @@ const Main = ({user}) => {
     <header className='border-b border-fourth p-4 font-bold'>Anasayfa</header>
 
     <Form user={user}/>
-     { !tweets?( <Loader designs="my-20 scale-[1.2]"/>
+
+     { !tweets?(
+       <Loader designs="my-20 scale-[1.2]"/>
      ) :(
 
       tweets.map((tweet ,key) => <Post key={key} tweet={tweet}/>) 

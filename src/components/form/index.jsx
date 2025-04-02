@@ -14,7 +14,7 @@ const Form = ({user}) => {
   const [image,setImage] =useState(null);
   const fileInputRef = useRef(null);
 
-  //yeni resim seçildiğinde seçen kullanıcıya önizleme
+  //yeni resim seçildiğinde seçen kullanıcıya önizlemesini göstermek için url'e çevirmek ve state aktar
   const onImageChange =(event) =>{
     if(event.target.files && event.target.files[0]){
      setImage( URL.createObjectURL(event.target.files[0]));
@@ -28,7 +28,7 @@ const Form = ({user}) => {
     fileInputRef.current.files= null;
   };
 
-   //çarpıya basıldığında ekrandaki resmi kaldır ve inputu temzile
+   //çarpıya basıldığında ekrandaki resmi kaldır ve inputu temizle
    const handlesubmit= async(e) =>{
       e.preventDefault();
       
@@ -43,7 +43,7 @@ const Form = ({user}) => {
 
      try{
        //yüklenme başladığında isLoadinge güncelle
-     setIsLoading(true)
+     setIsLoading(true);
     
      //resmi firebase storage'a yükle
      const imageUrl =await uploadToStorage(file);
@@ -55,10 +55,10 @@ const Form = ({user}) => {
      //kolleksiyona yeni tweet belgesi
      await addDoc(tweetsCol,{
       content:{
-      text,
-      image:imageUrl,
-
+        text,
+        image:imageUrl,
       },
+
       isEdited:false,
       likes:[],
       user:{
@@ -70,7 +70,7 @@ const Form = ({user}) => {
      });
 
      //inputları temizle
-     e.target.rest();
+     e.target.reset();
      setImage(null);
     }catch(error){
       console.log(error);
@@ -85,7 +85,8 @@ const Form = ({user}) => {
 
   return (
     <div className='border-b border-fourth p-4  flex gap-3'>
-        <img src={user?.photoURL} className='size-[35px] md:syize-[45px] rounded-full'/>
+        <img src={user.photoURL}
+         className='size-[35px] md:syize-[45px] rounded-full'/>
 
 
         <form className='w-full pt-1' onSubmit={handlesubmit}>
@@ -122,7 +123,7 @@ const Form = ({user}) => {
               </div>
 
               <button disabled={isLoading} type='submit' className='bg-secondary font-bold px-5 py-[6px]
-              rounded-full text-primary tracking-wide hover:brightness-90 min-w -[100px]'>
+                  rounded-full text-primary tracking-wide hover:brightness-90 min-w -[100px]'>
                 
                 {isLoading ? <Loader/> : "Gönder"}
               
@@ -130,7 +131,7 @@ const Form = ({user}) => {
             </div>
           </form>
     </div>
-  )
+  );
 };
 
 export default React.memo(Form);

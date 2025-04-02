@@ -1,9 +1,65 @@
-import React from 'react'
+import { deleteDoc, doc } from 'firebase/firestore';
+import React, { useState } from 'react'
+import { FaTrash } from 'react-icons/fa';
+import { MdEdit } from 'react-icons/md';
+import { auth, db } from '../../firebase';
+import { toast } from 'react-toastify';
+import EditModal from '../modal/edit-modal';
+import { useRef } from 'react';
 
-const Dropdown = () => {
+
+const Dropdown = ({tweet}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const inputRef = useRef();
+  //tweeti gönderen kişi ile şuan oturumu açık olan kişinin id'si aynı mı?
+  const isOwn = tweet.user.id ===auth.currentUser.uid;
+  //silme
+  const handleDelete = () =>{
+    //silinecek dökümanın referasını al
+   const tweetRef = doc(db,"tweets",tweet.id);
+
+   //dökümanı kaldır
+   deleteDoc(tweetRef)
+   .then(() =>toast.info("Tweet akıştan kaldırıldı"))
+   .catch(()=>toast.error("Bir sorun oluştu"));
+  };
+
+
   return (
-    <div>Dropdown</div>
-  )
+    isOwn &&(
+    <>
+      <label className="popup">
+      <input type="checkbox" ref={inputRef}/>
+      <div className="burger" tabIndex="0">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <nav className="popup-window">
+        <legend>Eylemler</legend>
+        <ul>
+          <li>
+            <button onClick={() =>setIsOpen(true)}>
+              <MdEdit className='text-blue-500'/>
+              <span>Düzenle</span>
+            </button>
+          </li>
+          <hr/>
+          <li>
+            <button onClick={handleDelete}>
+              <FaTrash className='text-red-500'/>
+              <span>Sil</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </label>
+
+   <EditModal isOpen={isOpen} close={() =>{setIsOpen(false); inputRef.current.checked=false; }}  tweet={tweet}/>
+  </>
+   ) 
+ );
+  
 };
 
 export default Dropdown;
