@@ -11,6 +11,7 @@ import { useRef } from 'react';
 const Dropdown = ({tweet}) => {
   const [isOpen, setIsOpen] = useState(false);
   const inputRef = useRef();
+
   //tweeti gönderen kişi ile şuan oturumu açık olan kişinin id'si aynı mı?
   const isOwn = tweet.user.id ===auth.currentUser.uid;
   //silme
@@ -55,7 +56,13 @@ const Dropdown = ({tweet}) => {
       </nav>
     </label>
 
-   <EditModal isOpen={isOpen} close={() =>{setIsOpen(false); inputRef.current.checked=false; }}  tweet={tweet}/>
+   <EditModal 
+      isOpen={isOpen} 
+      close={() =>{setIsOpen(false);
+       inputRef.current.checked=false;
+ 
+   }} 
+     tweet={tweet}/>
   </>
    ) 
  );

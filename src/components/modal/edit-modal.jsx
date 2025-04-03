@@ -32,13 +32,14 @@ const EditModal = ({isOpen,close,tweet}) => {
     if(file){
       const imageUrl =await uploadToStorage(file);
       updatedData["content.image"] =imageUrl;
-      
+           
     }
 
     
 
     //belgeyi güncelle
     await updateDoc(tweetRef,updatedData);
+    //state'i sıfırla ve modalı kapat
     setIsPicDeleting(false);
     close();
   };

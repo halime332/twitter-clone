@@ -80,7 +80,7 @@ const Form = ({user}) => {
 
   };
 
-
+  console.log(image);
     
 
   return (

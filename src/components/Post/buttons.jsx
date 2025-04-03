@@ -17,9 +17,10 @@ const Buttons = ({tweet}) => {
     //like'lamadıysam :kullanıcı id'sini likes dizisine ekle
     //like'ladıysam :kullanıcı id'sini likes dizisinden kaldır
     updateDoc(tweetRef,{
-     likes :isLiked ? arrayRemove(tweet.user.id) : arrayUnion(tweet.user.id),
+     likes :isLiked ? arrayRemove(auth.currentUser.uid) : arrayUnion(tweet.currentUser.uid),
     });
   };
+
   return (
     <div className='flex justify-between items-center text-zinc-500 '>
       <button className= "post-icon hover:text-blue-400 hover:bg-blue-400/20">
@@ -30,14 +31,15 @@ const Buttons = ({tweet}) => {
         <FaRetweet/>
       </button>
 
-      <button className='flex items-center hover:text-pink-400 relative' onClick={toggleLike}>
+      <button className='flex items-center hover:text-pink-400 relative'
+       onClick={toggleLike}>
         
         <div className= "flex items-center gap-1 post-icon  hover:bg-pink-400/20 ">
           {isLiked ? <FaHeart className='text-pink-500'/> : <FaRegHeart/>}
          
         </div>
 
-        <span className={` absolute ${isLiked ? "text-pink-500" :""} -end-1`}>
+        <span className={` absolute ${isLiked ? "text-pink-500" :""} absolute -end-1`}>
         {tweet.likes.length}
         </span>
       </button>
